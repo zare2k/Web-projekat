@@ -1,0 +1,61 @@
+﻿@using WebApplication1.Models;
+@{
+    FitnesCentar fitnesCentar = (FitnesCentar)HttpContext.Current.Application["FitnesCentarMod"];
+    Layout = null;
+    ViewBag.Title = "ModifikovanjeFitnesCentara";
+}
+
+<body>
+    <div>
+        @{
+            if (ViewBag.Message != "")
+            {
+                <h2 style="color:red">@ViewBag.Message</h2>
+            }
+        }
+        <h2 style="color:darkkhaki"><strong>Modifikovanje fitnes centra</strong></h2>
+        <form action="/Vlasnik/ModifikujFitnesCentar" method="post">
+            <table border="1">
+                <tr>
+                    <td style="color:darkkhaki" align="center">Naziv: </td>
+                    <td><input type="text" name="naziv" value="@fitnesCentar.Naziv" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Adresa: </td>
+                    <td><input type="text" name="adresa" value="@fitnesCentar.Adresa" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Godina otvaranja: </td>
+                    <td><input type="number" name="godinaOtvaranja" value="@fitnesCentar.GodinaOtvaranja" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Mesecna cena: </td>
+                    <td><input type="number" name="mesecnaCena" value="@fitnesCentar.MesecnaCena" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Godisnja cena: </td>
+                    <td><input type="number" name="godisnjaCena" value="@fitnesCentar.GodisnjaCena" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Cena jednog treninga: </td>
+                    <td><input type="number" name="cenaJednogTreninga" value="@fitnesCentar.CenaJednogTreninga" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Cena grupnog treninga: </td>
+                    <td><input type="number" name="cenaGrupnogTreninga" value="@fitnesCentar.CenaJednogGrupnogTreninga" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Cena treninga sa trenerom: </td>
+                    <td><input type="number" name="cenaTreningaSaTrenerom" value="@fitnesCentar.CenaTreningaSaTrenerom" required /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" value="Modifikuj" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><a href="/Vlasnik/PregledCentara"><input type="button" value="Odustani" /></a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+

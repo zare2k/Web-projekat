@@ -1,0 +1,52 @@
+﻿@{ 
+    Layout = null;
+    ViewBag.Title = "RegistracijaForma";
+}
+
+<body>
+    <p style="color:red">@ViewBag.Message</p>
+    <h2 style="color:darkkhaki">Forma za registraciju</h2>
+    <div>
+        <form action="/Home/RegistracijaForma" method="post">
+            <table border="1">
+                <tr>
+                    <td>Korisnicko ime: </td>
+                    <td><input type="text" name="korisnickoIme" placeholder="Korisnicko ime" required /></td>
+                </tr>
+                <tr>
+                    <td>Lozinka: </td>
+                    <td><input type="password" name="lozinka" placeholder="Lozinka" required /></td>
+                </tr>
+                <tr>
+                    <td>Ime: </td>
+                    <td><input type="text" name="ime" placeholder="Ime" required /></td>
+                </tr>
+                <tr>
+                    <td>Prezime: </td>
+                    <td><input type="text" name="prezime" placeholder="Prezime" required /></td>
+                </tr>
+                <tr>
+                    <td>Pol: </td>
+                    <td>
+                        <select name="pol" required>
+                            <option value="MUSKI">MUSKI</option>
+                            <option value="ZENSKI">ZENSKI</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Email: </td>
+                    <td><input type="email" name="email" placeholder="Email" required /></td>
+                </tr>
+                <tr>
+                    <td>Datum rodjenja: </td>
+                    <td><input type="date" name="datumRodjenja" placeholder="01.01.2000" required /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Registracija" /></td>
+                </tr>
+            </table>
+        </form>
+        <a href="/Home/Index">Pocetna stranica</a>
+    </div>
+</body>

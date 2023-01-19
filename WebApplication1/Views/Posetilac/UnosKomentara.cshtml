@@ -1,0 +1,40 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "UnosKomentara";
+}
+
+<body>
+    <h2 style="color:darkkhaki">UnosKomentara</h2>
+    <div>
+        <form action="~/Posetilac/UnosKomentara" method="post">
+            <table border="1">
+                <tr>
+                    <td align="center">Tekst komentara:</td>
+                    <td align="center"><input type="text" name="tekstKomentara" required /></td>
+                </tr>
+                <tr>
+                    <td align="center">Ocena:</td>
+                    <td>
+                        <select name="ocena" required>
+                            <option value="" selected></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" value="Unesi" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><a href="~/Home/Povratak"><input type="button" value="Odustani" /></a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+
+

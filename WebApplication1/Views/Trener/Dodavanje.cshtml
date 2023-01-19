@@ -1,0 +1,56 @@
+﻿@using WebApplication1.Models;
+@{
+    Layout = null;
+    ViewBag.Title = "Dodavanje";
+}
+
+<body>
+    <div>
+        @{ 
+            if(ViewBag.Message != "")
+            {
+                <h2 style="color:red">@ViewBag.Message</h2>
+            }
+        }
+        <h2 style="color:darkkhaki">Dodavanje treninga</h2>
+        <form action="~/Trener/DodavanjeTreninga" method="post">
+            <table border="1">
+                <tr>
+                    <td style="color:darkkhaki" align="center"><strong>Naziv</strong>:</td>
+                    <td><input type="text" name="naziv" placeholder="Naziv" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center"><strong>Tip treninga:</strong></td>
+                    <td>
+                        <select name="tipTreninga" required>
+                            <option value="YOGA">YOGA</option>
+                            <option value="LES_MILLS_TONE">LES_MILLS_TONE</option>
+                            <option value="BODY_PUMP">BODY_PUMP</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center"><strong>Trajanje treninga u minutima:</strong></td>
+                    <td><input type="number" name="trajanjeTreninga" placeholder="Trajanje treninga" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center"><strong>Datum odrzavanja treninga:</strong></td>
+                    <td><input type="date" name="datumIVremeTreninga" placeholder="Datum" /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center"><strong>Maksimalan broj posetilaca:</strong></td>
+                    <td><input type="number" name="maksimalanBrojPosetilaca" placeholder="Maksimalan broj posetilaca" required /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" value="Dodaj" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><a href="/Home/Povratak"><input type="button" value="Odustani" /></a></td>
+                </tr>
+            </table>
+            
+        </form>
+    </div>
+</body>
+
+

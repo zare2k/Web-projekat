@@ -1,0 +1,107 @@
+﻿@using WebApplication1.Models
+@{
+    FitnesCentar fitnesCentar = (FitnesCentar)HttpContext.Current.Application["Centar"];
+    List<GrupniTrening> grupniTreninzi = (List<GrupniTrening>)HttpContext.Current.Application["FilterGrupniTreninzi"];
+    Korisnik korisnik = (Korisnik)HttpContext.Current.Session["Korisnik"];
+    List<Komentar> komentari = (List<Komentar>)HttpContext.Current.Application["FilterKomentari"];
+    Vlasnik vlasnik = (Vlasnik)HttpContext.Current.Application["Vlasnik"];
+    Layout = null;
+}
+
+
+<body>
+    <div>
+        <h2 style="color:darkkhaki">Informacije o fitnes centru</h2>
+        <table border="1">
+            <tr>
+                <td style="color:darkkhaki"><strong>Naziv</strong></td>
+                <td style="color:darkkhaki"><strong>Adresa</strong></td>
+                <td style="color:darkkhaki"><strong>Godina otvaranja</strong></td>
+                <td style="color:darkkhaki"><strong>Vlasnik</strong></td>
+                <td style="color:darkkhaki"><strong>Mesecna cena</strong></td>
+                <td style="color:darkkhaki"><strong>Godisnja cena</strong></td>
+                <td style="color:darkkhaki"><strong>Cena jednog treninga</strong></td>
+                <td style="color:darkkhaki"><strong>Cena grupnog treninga</strong></td>
+                <td style="color:darkkhaki"><strong>Cena treninga sa trenerom</strong></td>
+            </tr>
+            <tr>
+                <td>@fitnesCentar.Naziv</td>
+                <td>@fitnesCentar.Adresa</td>
+                <td>@fitnesCentar.GodinaOtvaranja</td>
+                <td>@vlasnik.Ime</td>
+                <td>@fitnesCentar.MesecnaCena</td>
+                <td>@fitnesCentar.GodisnjaCena</td>
+                <td>@fitnesCentar.CenaJednogTreninga</td>
+                <td>@fitnesCentar.CenaJednogGrupnogTreninga</td>
+                <td>@fitnesCentar.CenaTreningaSaTrenerom</td>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <div>
+        <h2 style="color:darkkhaki">Planirani grupni treninzi</h2>
+        <table border="1">
+            <tr>
+                <td style="color:darkkhaki"><strong>Naziv</strong></td>
+                <td style="color:darkkhaki"><strong>Tip treninga</strong></td>
+                <td style="color:darkkhaki"><strong>Fitnes centar</strong></td>
+                <td style="color:darkkhaki"><strong>Trajanje treninga</strong></td>
+                <td style="color:darkkhaki"><strong>Datum odrzavanja</strong></td>
+                <td style="color:darkkhaki"><strong>Maksimalan broj posetilaca</strong></td>
+                <td style="color:darkkhaki"><strong>Broj prijavljenih posetilaca</strong></td>
+                <td style="color:darkkhaki"><strong>Prijava za trening</strong></td>
+            </tr>
+            @{
+                foreach (var trening in grupniTreninzi)
+                {
+                    <tr>
+                        <td>@trening.Naziv</td>
+                        <td>@trening.TipTreninga</td>
+                        <td>@trening.FitnesCentar.Naziv</td>
+                        <td>@trening.TrajanjeTreninga</td>
+                        <td>@trening.DatumIVremeTreninga</td>
+                        <td>@trening.MaksimalanBrojPosetilaca</td>
+                        <td>@trening.SpisakPosetilaca.Count</td>
+                        @{
+                            if (korisnik != null)
+                            {
+                                if (korisnik.Uloga == Uloga.POSETILAC)
+                                {
+                                    <td>
+                                        <form action="~/Posetilac/PrijavaNaTrening" method="post">
+                                            <input type="hidden" value="@trening.Naziv" name="naziv" />
+                                            <input type="submit" value="Prijava" />
+                                        </form>
+                                    </td>
+                                }
+                            }
+                        }
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+    <br />
+    <div>
+        <h2 style="color:darkkhaki">Komentari posetilaca</h2>
+        <table border="1">
+            <tr>
+                <td style="color:darkkhaki"><strong>Posetilac</strong></td>
+                <td style="color:darkkhaki"><strong>Tekst komentara</strong></td>
+                <td style="color:darkkhaki"><strong>Ocena</strong></td>
+            </tr>
+            @{
+                foreach (var komentar in komentari)
+                {
+                    <tr>
+                        <td>@komentar.Posetilac</td>
+                        <td>@komentar.TekstKomentara</td>
+                        <td>@komentar.Ocena</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+    <a href="~/Home/Povratak">Povratak</a>
+</body>
+

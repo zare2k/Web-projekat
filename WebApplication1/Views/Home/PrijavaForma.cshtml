@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "PrijavaForma";
+    Layout = null;
+}
+<body>
+    <p style="color:red">@ViewBag.Message</p>
+    <h2 style="color:darkkhaki">PrijavaForma</h2>
+    <div>
+        <form action="/Home/PrijavaForma" method="post">
+            <table>
+                <tr>
+                    <td>Korisnicko ime: </td>
+                    <td><input type="text" name="korisnickoIme" placeholder="Korisnicko ime" required /></td>
+                </tr>
+                <tr>
+                    <td>Lozinka: </td>
+                    <td><input type="password" name="lozinka" placeholder="Lozinka" required /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Prijava" /></td>
+                </tr>
+            </table>
+        </form>
+        <a href="/Home/Index">Pocetna stranica</a>
+    </div>
+</body>
+
+

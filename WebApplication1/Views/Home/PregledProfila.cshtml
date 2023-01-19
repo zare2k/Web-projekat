@@ -1,0 +1,55 @@
+﻿@using WebApplication1.Models
+@{
+    Korisnik korisnik = (Korisnik)HttpContext.Current.Session["Korisnik"];
+    Layout = null;
+}
+
+<body>
+    <h2 style="color:darkkhaki">Pregled i izmena korisnickog profila</h2>
+    <div>
+        <form action="~/Home/IzmeniProfil" method="post">
+            <table border="1">
+                <tr>
+                    <td style="color:darkkhaki" align="center">Korisnicko ime:</td>
+                    <td><input type="text" value="@korisnik.KorisnickoIme" name="korisnickoIme" required readonly/></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Lozinka:</td>
+                    <td><input type="password" value="@korisnik.Lozinka" name="lozinka" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Ime:</td>
+                    <td><input type="text" value="@korisnik.Ime" name="ime" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Prezime:</td>
+                    <td><input type="text" value="@korisnik.Prezime" name="prezime" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Pol:</td>
+                    <td><input type="text" value="@korisnik.Pol.ToString()" name="pol" required readonly /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Email:</td>
+                    <td><input type="email" value="@korisnik.Email" name="email" required readonly /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Datum rodjenja:</td>
+                    <td><input type="text" value="@korisnik.DatumRodjenja.ToString()" name="datumRodjenja" required readonly /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Uloga:</td>
+                    <td><input type="text" value="@korisnik.Uloga.ToString()" name="uloga" required readonly /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" value="Izmeni" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><a href="~/Home/Povratak">Odustani</a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+
+

@@ -1,0 +1,71 @@
+﻿@using WebApplication1.Models;
+@{
+    List<FitnesCentar> fitnesCentri = (List<FitnesCentar>)HttpContext.Current.Application["fitnesCentri"];
+    Layout = null;
+    ViewBag.Title = "PregledCentara";
+}
+
+<body>
+    @{ 
+        if (ViewBag.Message != "")
+        {
+            <h2 style="color:red">@ViewBag.Message</h2>
+        }
+    }
+    <h2 style="color:darkkhaki">Pregled fitnes centara</h2>
+    <div>
+        <table border="1">
+            <tr>
+                <td style="color:darkkhaki"><strong>Naziv</strong></td>
+                <td style="color:darkkhaki"><strong>Adresa</strong></td>
+                <td style="color:darkkhaki"><strong>Godina otvaranja</strong></td>
+                <td style="color:darkkhaki"><strong>Mesecna cena</strong></td>
+                <td style="color:darkkhaki"><strong>Godisnja cena</strong></td>
+                <td style="color:darkkhaki"><strong>Cena jednog treninga</strong></td>
+                <td style="color:darkkhaki"><strong>Cena jednog grupnog treninga</strong></td>
+                <td style="color:darkkhaki"><strong>Cena treninga sa trenerom</strong></td>
+            </tr>
+            @{ 
+                foreach(var fitnesCentar in fitnesCentri)
+                {
+                    <tr>
+                        <td>@fitnesCentar.Naziv</td>
+                        <td>@fitnesCentar.Adresa</td>
+                        <td>@fitnesCentar.GodinaOtvaranja</td>
+                        <td>@fitnesCentar.MesecnaCena</td>
+                        <td>@fitnesCentar.GodisnjaCena</td>
+                        <td>@fitnesCentar.CenaJednogTreninga</td>
+                        <td>@fitnesCentar.CenaJednogGrupnogTreninga</td>
+                        <td>@fitnesCentar.CenaTreningaSaTrenerom</td>
+                        <td>
+                            <form action="~/Vlasnik/BrisanjeFitnesCentra" method="post">
+                                <input type="hidden" value="@fitnesCentar.Naziv" name="naziv" />
+                                <input type="submit" value="Brisanje" />
+                            </form>
+                            <form action="~/Vlasnik/ModifikovanjeFitnesCentra" method="post">
+                                <input type="hidden" value="@fitnesCentar.Naziv" name="naziv" />
+                                <input type="submit" value="Modifikacija" />
+                            </form>
+                            <form action="~/Vlasnik/RegistrovanjeTrenera" method="post">
+                                <input type="hidden" value="@fitnesCentar.Naziv" name="naziv" />
+                                <input type="submit" value="Registruj trenera" />
+                            </form>
+                            <form action="~/Vlasnik/PrikazTrenera" method="post">
+                                <input type="hidden" value="@fitnesCentar.Naziv" name="naziv" />
+                                <input type="submit" value="Treneri" />
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+    <br />
+    <div>
+        <div>
+            <a href="~/Home/Odjava">Odjava</a>
+            <a href="/Vlasnik/KreiranjeFitnesCentra">Kreiranje fitnes centra</a>
+        </div>
+    </div>
+</body>
+

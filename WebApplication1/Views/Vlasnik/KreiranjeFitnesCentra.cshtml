@@ -1,0 +1,61 @@
+﻿@using WebApplication1.Models;
+@{
+    Layout = null;
+    ViewBag.Title = "KreiranjeFitnesCentra";
+}
+
+<body>
+    @{
+        if (ViewBag.Message != "")
+        {
+            <h2 style="color:red">@ViewBag.Message</h2>
+        }
+    }
+    <h2 style="color:darkkhaki">Kreiranje fitnes centra</h2>
+    <div>
+        <form action="/Vlasnik/KreirajFitnesCentar" method="post">
+            <table border="1">
+                <tr>
+                    <td style="color:darkkhaki" align="center">Naziv: </td>
+                    <td><input type="text" name="naziv" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Adresa: </td>
+                    <td><input type="text" name="adresa" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Godina otvaranja: </td>
+                    <td><input type="number" name="godinaOtvaranja" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Mesecna cena: </td>
+                    <td><input type="number" name="mesecnaCena" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Godisnja cena: </td>
+                    <td><input type="number" name="godisnjaCena" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Cena jednog treninga: </td>
+                    <td><input type="number" name="cenaJednogTreninga" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Cena grupnog treninga: </td>
+                    <td><input type="number" name="cenaGrupnogTreninga" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Cena treninga sa trenerom: </td>
+                    <td><input type="number" name="cenaTreningaSaTrenerom" required /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" value="Kreiraj" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><a href="/Vlasnik/PregledCentara"><input type="button" value="Odustani" /></a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+
+

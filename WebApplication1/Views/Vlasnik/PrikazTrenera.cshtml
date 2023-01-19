@@ -1,0 +1,49 @@
+﻿@using WebApplication1.Models;
+@{
+    List<Trener> treneri = (List<Trener>)HttpContext.Current.Application["TreneriPrikaz"];
+    Layout = null;
+    ViewBag.Title = "PrikazTrenera";
+}
+
+<body>
+    <div>
+        <h2 style="color:darkkhaki"><strong>Prikaz trenera</strong></h2>
+        <table border="1">
+            <tr>
+                <td style="color:darkkhaki" align="center"><strong>Korisnicko ime: </strong></td>
+                <td style="color:darkkhaki" align="center"><strong>Ime: </strong></td>
+                <td style="color:darkkhaki" align="center"><strong>Prezime: </strong></td>
+                <td style="color:darkkhaki" align="center"><strong>Pol: </strong></td>
+                <td style="color:darkkhaki" align="center"><strong>Datum rodjenja: </strong></td>
+                <td style="color:darkkhaki" align="center"><strong>Fitnes centar: </strong></td>
+            </tr>
+            @{ 
+                foreach(var trener in treneri)
+                {
+                    <tr>
+                        <td>@trener.KorisnickoIme</td>
+                        <td>@trener.Ime</td>
+                        <td>@trener.Prezime</td>
+                        <td>@trener.Pol.ToString()</td>
+                        <td>@trener.DatumRodjenja.ToString()</td>
+                        <td>@trener.FitnesCentar.Naziv</td>
+                        <td>
+                            <form action="~/Vlasnik/BlokirajTrenera" method="post">
+                                <input type="hidden" name="korisnickoIme" value="@trener.KorisnickoIme" />
+                                <input type="submit" value="Blokiraj" />
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+    <div>
+        <div>
+            <a href="~/Home/Odjava">Odjava</a>
+            <a href="/Vlasnik/PregledCentara">Pregled centara</a>
+        </div>
+    </div>
+</body>
+
+

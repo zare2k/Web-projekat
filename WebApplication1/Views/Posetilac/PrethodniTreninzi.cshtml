@@ -1,0 +1,63 @@
+﻿@using WebApplication1.Models
+@{
+    IEnumerable<GrupniTrening> grupniTreninzi = (IEnumerable<GrupniTrening>)HttpContext.Current.Application["PretragaTreninzi"];
+    ViewBag.Title = "PrethodniTreninzi";
+    Layout = null;
+}
+
+
+<body>
+    <div>
+        <h2 style="color:darkkhaki">Prethodni treninzi korisnika</h2>
+        <form action="/Posetilac/Sortiranje" method="post">
+            <select name="parametar">
+                <option value="naziv" selected>Naziv</option>
+                <option value="tipTreninga" selected>Tip treninga</option>
+                <option value="datumIVremeOdrzavanja" selected>Termin odrzavanja</option>
+            </select>
+            <select name="vrednost">
+                <option value="opadajuce" selected>Opadajuce</option>
+                <option value="rastuce" selected>Rastuce</option>
+            </select>
+            <input type="submit" value="Sortiraj" />
+        </form>
+        <table border="1">
+            <tr>
+                <td style="color:darkkhaki"><strong>Naziv</strong></td>
+                <td style="color:darkkhaki"><strong>Tip treninga</strong></td>
+                <td style="color:darkkhaki"><strong>Fitnes centar</strong></td>
+                <td style="color:darkkhaki"><strong>Trajanje treninga</strong></td>
+                <td style="color:darkkhaki"><strong>Datum odrzavanja</strong></td>
+                <td style="color:darkkhaki"><strong>Maksimalan broj posetilaca</strong></td>
+            </tr>
+            @foreach (var grupniTrening in grupniTreninzi)
+            {
+                <tr>
+                    <td>@grupniTrening.Naziv</td>
+                    <td>@grupniTrening.TipTreninga.ToString()</td>
+                    <td>@grupniTrening.FitnesCentar.Naziv</td>
+                    <td>@grupniTrening.TrajanjeTreninga</td>
+                    <td>@grupniTrening.DatumIVremeTreninga.ToString()</td>
+                    <td>@grupniTrening.MaksimalanBrojPosetilaca</td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div>
+        <form action="/Posetilac/Pretraga" method="post">
+            <p style="color:darkkhaki">Pretrazi prethodne treninge po zeljenom kriterujumu</p>
+            <input type="text" name="naziv" placeholder="Naziv" />
+            <select name="tipTreninga">
+                @{
+                    <option value="" selected></option>
+                    <option value="@TipTreninga.BODY_PUMP">BODY PUMP</option>
+                    <option value="@TipTreninga.LES_MILLS_TONE">LES MILLS TONE</option>
+                    <option value="@TipTreninga.YOGA">YOGA</option>
+                }
+            </select>
+            <input type="text" name="fitnesCentar" placeholder="Fitnes centar" />
+            <input type="submit" value="Pretrazi" />
+        </form>
+    </div>
+    <a href="~/Home/Povratak">Pocetna stranica</a>
+</body>

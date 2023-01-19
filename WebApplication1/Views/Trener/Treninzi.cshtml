@@ -1,0 +1,150 @@
+﻿@using WebApplication1.Models;
+@{
+    IEnumerable<GrupniTrening> prethodniTreninzi = (IEnumerable<GrupniTrening>)HttpContext.Current.Application["PrethodniTreninzi"];
+    List<GrupniTrening> buduciTreninzi = (List<GrupniTrening>)HttpContext.Current.Application["BuduciTreninzi"];
+    List<Posetilac> posetioci = (List<Posetilac>)HttpContext.Current.Application["PosetiociTreninga"];
+    Layout = null;
+    ViewBag.Title = "Treninzi";
+}
+
+<body>
+    @{
+        if (ViewBag.Message != "")
+        {
+            <h2 style="color:red">@ViewBag.Message</h2>
+        }
+    }
+    <h2 style="color:darkkhaki">Prethodni treninzi</h2>
+    <div>
+        <form action="~/Trener/Sortiranje" method="post">
+            <select name="parametar">
+                <option value="naziv" selected>Naziv</option>
+                <option value="tipTreninga" selected>Tip treninga</option>
+                <option value="datumIVremeOdrzavanja" selected>Datum odrzavanja</option>
+            </select>
+            <select name="vrednost">
+                <option value="opadajuce" selected>Opadajuce</option>
+                <option value="rastuce" selected>Rastuce</option>
+            </select>
+            <input type="submit" value="Sortiraj" />
+        </form>
+        <table border="1">
+            <tr>
+                <td style="color:darkkhaki"><strong>Naziv</strong></td>
+                <td style="color:darkkhaki"><strong>Tip treninga</strong></td>
+                <td style="color:darkkhaki"><strong>Fitnes centar</strong></td>
+                <td style="color:darkkhaki"><strong>Trajanje treninga</strong></td>
+                <td style="color:darkkhaki"><strong>Datum odrzavanja</strong></td>
+                <td style="color:darkkhaki"><strong>Maks broj posetilaca</strong></td>
+                <td style="color:darkkhaki"><strong>Broj prijavljenih posetilaca</strong></td>
+            </tr>
+            @foreach (var trening in prethodniTreninzi)
+            {
+                <tr>
+                    <td>@trening.Naziv</td>
+                    <td>@trening.TipTreninga</td>
+                    <td>@trening.FitnesCentar.Naziv</td>
+                    <td>@trening.TrajanjeTreninga</td>
+                    <td>@trening.DatumIVremeTreninga.ToString()</td>
+                    <td>@trening.MaksimalanBrojPosetilaca</td>
+                    <td>@trening.SpisakPosetilaca.Count</td>
+                    <td>
+                        <form action="/Trener/PrikazPosetilaca" method="post">
+                            <input type="hidden" value="@trening.Naziv" name="naziv" />
+                            <input type="submit" value="Prikaz posetilaca" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </table>
+        <form action="~/Trener/Pretraga" method="post">
+            <h2 style="color:darkkhaki">Pretrazi prethodne treninge</h2>
+            <input type="text" name="naziv" placeholder="Naziv" />
+            <select name="tipTreninga">
+                @{
+                    <option value="" selected></option>
+                    <option value="@TipTreninga.BODY_PUMP">BODY PUMP</option>
+                    <option value="@TipTreninga.LES_MILLS_TONE">LES MILLS TONE</option>
+                    <option value="@TipTreninga.YOGA">YOGA</option>
+                }
+            </select>
+            <input type="datetime-local" id="donjaGranicaOdrzavanja" name="donjaGranicaOdrzavanja" placeholder="Donja granica odrzavanja" />
+            <input type="datetime-local" id="gornjaGranicaOdrzavanja" name="gornjaGranicaOdrzavanja" placeholder="Gornja granica odrzavanja" />
+            <input type="submit" value="Pretrazi" />
+        </form>
+    </div>
+    <h2 style="color:darkkhaki">Buduci treninzi</h2>
+    <div>
+        <table border="1">
+            <tr>
+                <td style="color:darkkhaki"><strong>Naziv</strong></td>
+                <td style="color:darkkhaki"><strong>Tip treninga</strong></td>
+                <td style="color:darkkhaki"><strong>Fitnes centar</strong></td>
+                <td style="color:darkkhaki"><strong>Trajanje treninga</strong></td>
+                <td style="color:darkkhaki"><strong>Datum odrzavanja</strong></td>
+                <td style="color:darkkhaki"><strong>Maks broj posetilaca</strong></td>
+                <td style="color:darkkhaki"><strong>Broj prijavljenih posetilaca</strong></td>
+            </tr>
+            @foreach (var trening in buduciTreninzi)
+            {
+                <tr>
+                    <td>@trening.Naziv</td>
+                    <td>@trening.TipTreninga</td>
+                    <td>@trening.FitnesCentar.Naziv</td>
+                    <td>@trening.TrajanjeTreninga</td>
+                    <td>@trening.DatumIVremeTreninga.ToString()</td>
+                    <td>@trening.MaksimalanBrojPosetilaca</td>
+                    <td>@trening.SpisakPosetilaca.Count</td>
+                    <td>
+                        <form action="/Trener/BrisanjeGrupnogTreninga" method="post">
+                            <input type="hidden" value="@trening.Naziv" name="naziv" />
+                            <input type="submit" value="Brisanje" />
+                        </form>
+                        <form action="/Trener/ModifikovanjeGrupnogTreninga" method="post">
+                            <input type="hidden" value="@trening.Naziv" name="naziv" />
+                            <input type="submit" value="Modifikacija" />
+                        </form>
+                        <form action="/Trener/PrikazPosetilaca" method="post">
+                            <input type="hidden" value="@trening.Naziv" name="naziv" />
+                            <input type="submit" value="Prikaz posetilaca" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div>
+        @{
+            if (@posetioci.Count > 0)
+            {
+                <table border="1">
+                    <tr>
+                        <td style="color:darkkhaki"><strong>Korisnicko ime:</strong></td>
+                        <td style="color:darkkhaki"><strong>Ime:</strong></td>
+                        <td style="color:darkkhaki"><strong>Prezime:</strong></td>
+                        <td style="color:darkkhaki"><strong>Pol:</strong></td>
+                        <td style="color:darkkhaki"><strong>Datum rodjenja:</strong></td>
+                    </tr>
+                    @foreach (var posetilac in posetioci)
+                    {
+                        <tr>
+                            <td>@posetilac.KorisnickoIme</td>
+                            <td>@posetilac.Ime</td>
+                            <td>@posetilac.Prezime</td>
+                            <td>@posetilac.Pol.ToString()</td>
+                            <td>@posetilac.DatumRodjenja.ToString()</td>
+                        </tr>
+                    }
+                </table>
+            }
+        }
+    </div>
+    <br />
+    <div>
+        <a href="~/Home/Odjava">Odjava</a>
+        <a href="/Trener/Dodavanje">Dodavanje treninga</a>
+        <a href="~/Home/Povratak">Pocetna</a>
+    </div>
+</body>
+
+

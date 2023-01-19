@@ -1,0 +1,82 @@
+﻿@using WebApplication1.Models;
+@{
+    GrupniTrening grupniTrening = (GrupniTrening)HttpContext.Current.Application["GrupniTrening"];
+    Layout = null;
+    ViewBag.Title = "Modifikovanje";
+}
+
+<body>
+    
+    <div>
+        @{
+            if (ViewBag.Message != "")
+            {
+                <h2 style="color:red">@ViewBag.Message</h2>
+            }
+        }
+        <h2 style="color:darkkhaki"><strong>Modifikovanje</strong></h2>
+        <form action="/Trener/ModifikacijaGrupnogTreninga" method="post">
+            <table border="1">
+                <tr>
+                    <td style="color:darkkhaki" align="center">Naziv:</td>
+                    <td><input type="text" name="naziv" value="@grupniTrening.Naziv" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Tip treninga:</td>
+                    @{
+                        if (@grupniTrening.TipTreninga == TipTreninga.YOGA)
+                        {
+                            <td>
+                                <select name="tipTreninga">
+                                    <option value="@TipTreninga.YOGA" selected>YOGA</option>
+                                    <option value="@TipTreninga.LES_MILLS_TONE">LES_MILLS_TONE</option>
+                                    <option value="@TipTreninga.BODY_PUMP">BODY_PUMP</option>
+                                </select>
+                            </td>
+                        }
+                        else if (grupniTrening.TipTreninga == TipTreninga.LES_MILLS_TONE)
+                        {
+                            <td>
+                                <select name="tipTreninga">
+                                    <option value="@TipTreninga.YOGA">YOGA</option>
+                                    <option value="@TipTreninga.LES_MILLS_TONE" selected>LES_MILLS_TONE</option>
+                                    <option value="@TipTreninga.BODY_PUMP">BODY_PUMP</option>
+                                </select>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <select name="tipTreninga">
+                                    <option value="@TipTreninga.YOGA">YOGA</option>
+                                    <option value="@TipTreninga.LES_MILLS_TONE">LES_MILLS_TONE</option>
+                                    <option value="@TipTreninga.BODY_PUMP" selected>BODY_PUMP</option>
+                                </select>
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Trajanje treninga:</td>
+                    <td><input type="number" name="trajanjeTreninga" value="@grupniTrening.TrajanjeTreninga" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Datum i vreme odrzavanja:</td>
+                    <td><input type="datetime" name="datumIVremeTreninga" value="@grupniTrening.DatumIVremeTreninga" required /></td>
+                </tr>
+                <tr>
+                    <td style="color:darkkhaki" align="center">Maksimalan broj posetilaca:</td>
+                    <td><input type="number" name="maksimalanBrojPosetilaca" value="@grupniTrening.MaksimalanBrojPosetilaca" required /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" value="Modifikuj" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><a href="/Home/Povratak"><input type="button" value="Odustani" /></a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+
+

@@ -1,0 +1,99 @@
+﻿@using WebApplication1.Models
+
+@{
+    IEnumerable<FitnesCentar> fitnesCentri = (IEnumerable<FitnesCentar>)HttpContext.Current.Application["Centri"];
+    Korisnik korisnik = (Korisnik)HttpContext.Current.Session["Korisnik"];
+    Layout = null;
+}
+<html>
+<head>
+    <title>Dobrodosli!</title>
+</head>
+<body>
+    <h2 style="color:darkkhaki"><strong>Fitnes centri</strong></h2>
+    <div>
+        <form action="/Home/Sortiranje" method="post">
+            <select name="parametar">
+                <option value="naziv" selected>Naziv</option>
+                <option value="adresa" selected>Adresa</option>
+                <option value="godinaOtvaranja" selected>Godina otvaranja</option>
+            </select>
+            <select name="vrednost">
+                <option value="opadajuce" selected>Opadajuce</option>
+                <option value="rastuce" selected>Rastuce</option>
+            </select>
+            <input type="submit" value="Sortiraj" />
+        </form>
+        <table border="1">
+            <tr>
+                <td style="color:darkkhaki"><strong>Naziv</strong></td>
+                <td style="color:darkkhaki"><strong>Adresa</strong></td>
+                <td style="color:darkkhaki"><strong>Godina otvaranja</strong></td>
+                <td></td>
+            </tr>
+            @foreach (var centar in fitnesCentri)
+            {
+                if (centar.Obrisan == false)
+                {
+                    <tr>
+                        <td>@centar.Naziv</td>
+                        <td>@centar.Adresa</td>
+                        <td>@centar.GodinaOtvaranja</td>
+                        <td>
+                            <form action="~/FitnesCentar/Index">
+                                <input type="hidden" value="@centar.Naziv" name="naziv" />
+                                <input type="submit" value="Detalji" />
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+    <br />
+    <div>
+        @{
+            if (@korisnik == null)
+            {
+                <a href="~/Home/Registracija">
+                    <input type="submit" value="Registracija">
+                </a>
+                <br />
+                <a href="~/Home/Prijava">
+                    <input type="submit" value="Prijava" />
+                </a>
+            }
+            else
+            {
+                if (@korisnik.Uloga == Uloga.POSETILAC)
+                {
+                    <a href="~/Home/Odjava">Odjava</a>
+                    <a href="~/Posetilac/PrethodniTreninzi">Zavrseni treninzi</a>
+                    <a href="~/Posetilac/UnosKomentara">Unesite komentar</a>
+                }
+                if (@korisnik.Uloga == Uloga.TRENER)
+                {
+                    <a href="~/Home/Odjava">Odjava</a>
+                    <a href="~/Trener/Treninzi">Grupni treninzi</a>
+                }
+                if (@korisnik.Uloga == Uloga.VLASNIK)
+                {
+                    <a href="~/Home/Odjava">Odjava</a>
+                    <a href="~/Vlasnik/PregledCentara">Pregled centara</a>
+                }
+                <a href="~/Home/PregledProfila">Pregled i izmena profila</a>
+            }
+        }
+    </div>
+    <div>
+        <form action="/Home/Pretraga" method="post">
+            <p style="color:darkkhaki">Pretrazi fitnes centre po zeljenom kriterujumu</p>
+            <input type="text" name="naziv" placeholder="Naziv" />
+            <input type="text" name="adresa" placeholder="Adresa" />
+            <input type="text" name="godinaOtvaranjaDonja" placeholder="Donja granica otvaranja" />
+            <input type="text" name="godinaOtvaranjaGornja" placeholder="Gornja granica otvaranja" />
+            <input type="submit" value="Pretrazi" />
+        </form>
+    </div>    
+</body>
+</html>
